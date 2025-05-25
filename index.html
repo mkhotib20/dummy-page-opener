@@ -1,28 +1,28 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>Redirecting...</title>
-  <script>
-    window.onload = function () {
-      var deeplink = "traveloka://flight"; // Replace with your actual deeplink
-      var fallback = "https://www.traveloka.com/en-id/flight"; // Replace with your fallback URL
+  <head>
+    <title>Redirecting...</title>
+    <script>
+      window.onload = function () {
+        var deeplink = "traveloka://flight"; // Replace with your actual deeplink
+        var fallback = "https://www.traveloka.com/en-id/flight"; // Replace with your fallback URL
 
-      // Start timer to redirect to fallback
-      var fallbackTimer = setTimeout(function () {
-        window.location.href = fallback;
-      }, 1500); // Give 1.5 seconds to open the app
+        // Start timer to redirect to fallback
+        var fallbackTimer = setTimeout(function () {
+          window.location.href = fallback;
+        }, 1500); // Give 1.5 seconds to open the app
 
-      // Attempt to open the app
-      window.location.href = deeplink;
-
-      // On mobile Safari, prevent the fallback if the app opened successfully
-      window.addEventListener("pagehide", function () {
-        clearTimeout(fallbackTimer);
-      });
-    };
-  </script>
-</head>
-<body>
-  <p>Redirecting to app...</p>
-</body>
+        window.location.href = deeplink;
+        document.addEventListener("visibilitychange", () => {
+          if (document.hidden) {
+            clearTimeout(fallbackTimer);
+            console.log("cleared fallback timer");
+          }
+        });
+      };
+    </script>
+  </head>
+  <body>
+    <p>Redirecting to app...</p>
+  </body>
 </html>
