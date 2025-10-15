@@ -3,14 +3,22 @@
   <head>
     <title>Redirecting...</title>
     <script>
-      window.onload = function () {
-        var deeplink = "traveloka://flight"; // Replace with your actual deeplink
-        var fallback = "https://www.traveloka.com/en-id/flight"; // Replace with your fallback URL
+      async function handleOnLoad() {
+        const url = "https://www.traveloka.com/en-id/flight"; // Replace with your url URL
 
-        window.location.href = fallback;
-        setTimeout(() => {
-          window.open(fallback, '_blank');
-        }, 200);
+        const data = await fetch("https://dummyjson.com/products").then((res) =>
+          res.json()
+        );
+
+        if (data) {
+          setTimeout(() => {
+            window.open(url, "_blank");
+          }, 50);
+        } else {
+          window.location.href = "https://www.traveloka.com/";
+        }
+
+        window.location.href = url;
 
         // window.location.href = deeplink;
         document.addEventListener("visibilitychange", () => {
@@ -18,7 +26,8 @@
             window.location.href = "https://www.traveloka.com/";
           }
         });
-      };
+      }
+      window.onload = handleOnLoad;
     </script>
   </head>
   <body>
