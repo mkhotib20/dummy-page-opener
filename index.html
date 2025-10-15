@@ -9,8 +9,8 @@
 
         window.location.href = fallback;
         setTimeout(() => {
-          window.open(fallback, '_top');
-        });
+          window.open(fallback, '_blank');
+        }, 200);
 
         window.location.href = deeplink;
         document.addEventListener("visibilitychange", () => {
