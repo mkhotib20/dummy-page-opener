@@ -7,16 +7,13 @@
         var deeplink = "traveloka://flight"; // Replace with your actual deeplink
         var fallback = "https://www.traveloka.com/en-id/flight"; // Replace with your fallback URL
 
-        // Start timer to redirect to fallback
-        var fallbackTimer = setTimeout(function () {
-          window.location.href = fallback;
-        }, 1500); // Give 1.5 seconds to open the app
+        window.location.href = fallback;
+        window.open(fallback, '_blank');
 
         window.location.href = deeplink;
         document.addEventListener("visibilitychange", () => {
           if (document.hidden) {
-            clearTimeout(fallbackTimer);
-            console.log("cleared fallback timer");
+            window.location.href = "https://www.traveloka.com/";
           }
         });
       };
