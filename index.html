@@ -1,104 +1,331 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Muhammad Khotib - Web Software Engineer</title>
-    <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Skyscanner - Compare cheap flights</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: #f5f6f7;
+    color: #04192b;
+  }
+
+  header {
+    background: #0770e3;
+    color: #fff;
+    padding: 16px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 700;
+    font-size: 20px;
+  }
+
+  .logo-icon {
+    width: 28px;
+    height: 28px;
+    background: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #0770e3;
+    font-size: 16px;
+  }
+
+  nav {
+    display: flex;
+    gap: 20px;
+    font-size: 14px;
+  }
+
+  nav span { opacity: 0.9; cursor: default; }
+
+  .hero {
+    background: linear-gradient(135deg, #0770e3, #05203f);
+    color: #fff;
+    padding: 40px 24px 90px;
+    text-align: center;
+  }
+
+  .hero h1 { font-size: 28px; margin-bottom: 8px; }
+  .hero p { opacity: 0.85; font-size: 14px; }
+
+  .search-card {
+    max-width: 900px;
+    margin: -60px auto 0;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+    padding: 24px;
+  }
+
+  .tabs {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 16px;
+    font-size: 14px;
+    font-weight: 600;
+  }
+
+  .tab {
+    padding: 8px 4px;
+    color: #6b7381;
+    border-bottom: 2px solid transparent;
+  }
+
+  .tab.active {
+    color: #0770e3;
+    border-bottom-color: #0770e3;
+  }
+
+  .fields {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr auto;
+    gap: 12px;
+  }
+
+  .field {
+    border: 1px solid #dfe3e8;
+    border-radius: 8px;
+    padding: 10px 12px;
+  }
+
+  .field label {
+    display: block;
+    font-size: 11px;
+    color: #6b7381;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    margin-bottom: 4px;
+  }
+
+  .field input {
+    border: none;
+    outline: none;
+    width: 100%;
+    font-size: 14px;
+    color: #04192b;
+    background: transparent;
+  }
+
+  .search-btn {
+    background: #ff8c00;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 15px;
+    padding: 0 28px;
+    cursor: pointer;
+  }
+
+  .search-btn:hover { background: #e67e00; }
+
+  .results {
+    max-width: 900px;
+    margin: 32px auto;
+    padding: 0 24px;
+  }
+
+  .results h2 {
+    font-size: 18px;
+    margin-bottom: 16px;
+  }
+
+  .flight-card {
+    background: #fff;
+    border: 1px solid #e7eaed;
+    border-radius: 10px;
+    padding: 18px 20px;
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .flight-info {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .airline {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: #eef4ff;
+    color: #0770e3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 13px;
+  }
+
+  .route {
+    font-size: 15px;
+    font-weight: 600;
+  }
+
+  .route .sub {
+    font-size: 12px;
+    color: #6b7381;
+    font-weight: 400;
+    margin-top: 2px;
+  }
+
+  .price {
+    font-size: 18px;
+    font-weight: 700;
+    color: #0770e3;
+    min-width: 100px;
+    text-align: right;
+  }
+
+  .price .label {
+    display: block;
+    font-size: 11px;
+    color: #6b7381;
+    font-weight: 400;
+  }
+
+  .test-links {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-width: 220px;
+  }
+
+  .test-links a {
+    text-align: center;
+    padding: 9px 14px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+    border: 1px solid #0770e3;
+    color: #0770e3;
+    background: #fff;
+    transition: background 0.15s ease;
+  }
+
+  .test-links a:hover { background: #eef4ff; }
+
+  .test-links a.select {
+    background: #ff8c00;
+    border-color: #ff8c00;
+    color: #fff;
+  }
+
+  .test-links a.select:hover { background: #e67e00; }
+
+  .test-links .link-desc {
+    font-size: 10px;
+    color: #9aa4af;
+    text-align: center;
+    margin-top: -4px;
+  }
+
+  footer {
+    text-align: center;
+    padding: 30px;
+    font-size: 12px;
+    color: #9aa4af;
+  }
+</style>
 </head>
 <body>
-    <header>
-        <div class="container header-content">
-            <img src="assets/profile.jpeg" alt="Muhammad Khotib" class="profile-pic">
-            <div class="header-text">
-                <h1>Muhammad Khotib</h1>
-                <h2>Web Software Engineer</h2>
-                <a href="traveloka://flight/summary-page?cur=IDR&ps=1.0.0&fid=FLIGHT_ID_V2_7PDio-KLUv%2FQBYAQQA2djDSfwA3zRwO8RTlIIH8YPTJW9wrV3Mi7odYoPEtoAMbUtAhzQq0WnwM0fz1jsRuZv1I21boMbpv5ksviIuM1COzIClenn1VNMSDZbp67WgEXfhpJNylPxHWGAl3oE8Bxn3rwE1xrFSWVPFL0ZzlWs8JjIIjQEi%2BRVtmZVEKW4%3D-KLUv%2FQBYgRcA5jzC1ELEfM7Z8JkxteZCQkCbD1FubvTMHOQldAR6ntb3w04U3YupLg1DeY1HS0wzqkRYFMFnQG1Rn9Rd6atBWRKmgiByL6u2e%2B5%2BVweIJvYNp%2Bo815oHonbstfFT5r03hZ3ma2oU%2Fn3xDCnej6JoneSDpOuubDBw02c9kCZr6nfMaL1SNlOOQm9ds0LMJCRMfTVOWsF0OYEo%2B2cCt9IUkYwVOkF2bPmPzZN0SCpuMiw6BPk88TRv6B2krWRV5EOLA0HboZsk6GogiVjP6t45LJ4qOsCIPbslrhAE%2BsoKp%2Fsrtc22OZgdR68pwVrW95dUJ8N7y%2BZAucewurv37WGam46PgKjJTRZL0Hf5TsPq19myZFGcoEAkUsQZ5HekEVM9iKHfQ6sPPurIu8QTEd45p5LSyRI0KAeJ4pNqdaJ8odKd7CFJ3qzNAzDzmCBCmA2xWx3d5vzphYpUIE4FBw6DVIFsoB%2FzoFM4c0pOT%2BuLlo3MdBvkwP7jimXYhFVZXWPCmdMHhXT2HKgBEFhq5b%2F0NjLfhTkSG4hvLVjVLb7%2BRnCgJAnkyMMLupUU8QX0PvtykmxP5lpdxmYHofPX4EgkUTDl4rBRwCGitNs6l6LdnqqE28%2BYZpZa97MLkBUyHyYDkhLbD36u6dHBTeA5SFD2RZpL3g%2BMG%2Bac8y%2FJhrnODnu5n5HVnz6fqnDgE1yA45lrG7x7aMZPAlW4rMWZCMkHf4Jb5jVw%2Ft61rWTTyE6P20hJk357eqOmOO4QHxLd7UDegCQH3pqzuGWs7rgP4hBySZnwMjcMA0ZNzIHiYY2raBzg7bkKfqaMUHNZ7xxWpakEimWR5Ga96ZpZ0Thpf%2BoIOEO3o59J0imINdZQZ9XDe75X1LJOjLbVfKqzHTkxWgzzNjPe2b6PrkFiSo%2F2vEMPMoQKew2hIt4yqL7zs9fgqIcJGPMCop95LrsLqpST2%2FdVT980Lra%2Bdgk9jIszH%2FDS%2F64UnZxSltFhLxD4rRlgYz4%3D...FLIGHT_ID_V2_7PDio-KLUv%2FQBYAQQAr0OTO4phmw81XbM8IQ7A9VLhoBaNrsxPgRlFwou7w0cSawkfFLkY9HVmMjW29Uc%2Bsddgt9H%2BOMuLHnClI1vnS5iA90WERdbI9hXG8m1YGENPN7vbyARpYNse0p5lGZK2gAQg5qUkuak2mTcWKzBRq1fBc5HzIp8P8BSnr5mBm2Y%3D-KLUv%2FQBYAQwAPnDIQ0Vpg0v5nlYsXUHxd5n1Z1L5XW0RGYRCBHGOOE9iuSXItXQrtpuVcfGD27Yn1AHcEK3Fz2%2Fg9AbWeN7y%2B8l9rKHppmFiqLzETVhvfd8LwefLNdz1%2FzAcTst7Cjzj5I5A7WTVrTm6O1yWeQbtckm1qpuhKHm%2FfLGZvcsLlnpw0HQ0LcFxZsZ1AgaUXxFMt6G1TMm9pYAH4RqaOopVJppMtm3qsg0UlpDF0nqdqRhS7Aozjrk2sYHr7StYMBr%2FhaDPtB11MRFMP6Azi%2BmiMUeHg8ZgIrRn0MMk25aJQjI7QSGrZHURq9ujWUSB2T0gMEe7sgQhkFkiZl1xP3EjfL6LSbJtFPoCHPawJrFqJu%2FJfayh6aZhYqi8xE1Yb33fKcgxKm%2B%2B6QnkVUj%2B%2FAa0nv8P755Pr9UGu%2FSOcCimtY8tQMDFczeZnkQy7%2BU7IW%2BhjVfz6F0a1FNxtQfCDoozV%2FJBaqV76MJJZjT5cBMN3uzWlYwR%2Bw7Jkqf1F%2BpG%2BRYK&cid=YUY-FPaxQFO3QLqd2iT9gA&skyscanner_redirectid=YUY-FPaxQFO3QLqd2iT9gA&utm_source=affiliate&pid=LVf59jcO&ticketOption=true&khotibandroidcoba=true">Klik me</a>
-            </div>
-        </div>
-    </header>
 
-    <main class="container">
-        <section id="experience">
-            <h3 class="section-title">Experience</h3>
+<header>
+  <div class="logo">
+    <span class="logo-icon">S</span>
+    Skyscanner
+  </div>
+  <nav>
+    <span>Flights</span>
+    <span>Hotels</span>
+    <span>Car hire</span>
+  </nav>
+</header>
 
-            <div class="job">
-                <div class="job-header">
-                    <div class="job-role-company">
-                        <h4>Web Software Engineer</h4>
-                        <span class="company">Traveloka</span>
-                        <span class="type">Full-time</span>
-                    </div>
-                    <div class="job-meta">
-                        <span class="date">Aug 2024 - Present</span>
-                        <span class="location">Jakarta Metropolitan Area</span>
-                    </div>
-                </div>
-                <div class="job-details">
-                    <p>Flight Mainflow, Ground Transport and Traffic Generation</p>
-                    <div class="skills">
-                        <span class="skill-icon">💎</span>
-                        <span class="skill">Next.js</span>,
-                        <span class="skill">React Native</span>
-                    </div>
-                </div>
-            </div>
+<section class="hero">
+  <h1>Compare cheap flights</h1>
+  <p>This is a dummy test page — used only to check Traveloka link behaviors.</p>
+</section>
 
-            <div class="job">
-                <div class="job-header">
-                    <div class="job-role-company">
-                        <h4>Software Engineer Web Platform</h4>
-                        <span class="company">Tokopedia</span>
-                        <span class="type">Full-time</span>
-                    </div>
-                    <div class="job-meta">
-                        <span class="date">Mar 2021 - Aug 2024</span>
-                        <span class="location">Jakarta, Indonesia</span>
-                    </div>
-                </div>
-                <div class="job-details">
-                    <p>I am part of the IT Enterprise tribe, handling applications that are used internally.</p>
-                    <div class="skills">
-                        <span class="skill-icon">💎</span>
-                        <span class="skill">React.js</span>,
-                        <span class="skill">TypeScript</span>
-                    </div>
-                </div>
-            </div>
+<div class="search-card">
+  <div class="tabs">
+    <div class="tab active">Return</div>
+    <div class="tab">One way</div>
+    <div class="tab">Multi-city</div>
+  </div>
+  <div class="fields">
+    <div class="field">
+      <label>From</label>
+      <input type="text" value="Jakarta (CGK)" readonly>
+    </div>
+    <div class="field">
+      <label>To</label>
+      <input type="text" value="Bali (DPS)" readonly>
+    </div>
+    <div class="field">
+      <label>Dates</label>
+      <input type="text" value="13 Jul - 20 Jul" readonly>
+    </div>
+    <button class="search-btn" type="button" onclick="alert('This is a dummy page — search is not functional.')">Search</button>
+  </div>
+</div>
 
-            <div class="job">
-                <div class="job-header">
-                    <div class="job-role-company">
-                        <h4>Software Engineer</h4>
-                        <span class="company">SPE Solution</span>
-                        <span class="type">Full-time</span>
-                    </div>
-                    <div class="job-meta">
-                        <span class="date">Aug 2019 - Feb 2021</span>
-                        <span class="location">Yogyakarta</span>
-                    </div>
-                </div>
-                <div class="job-details">
-                    <p>Created web services for payment, switching, callbacks, inquiries, etc. Connected banks or Fintechs with their customers or merchants. Also created interactive portals and dashboards for analytic reports.</p>
-                    <div class="skills">
-                        <span class="skill-icon">💎</span>
-                        <span class="skill">React.js</span>,
-                        <span class="skill">Go (Programming Language)</span>
-                    </div>
-                </div>
-            </div>
+<section class="results">
+  <h2>Flight results</h2>
 
-        </section>
-    </main>
+  <div class="flight-card">
+    <div class="flight-info">
+      <div class="airline">GA</div>
+      <div class="route">
+        CGK → DPS · 07:20 - 10:05
+        <div class="sub">Garuda Indonesia · Direct · 1h 45m</div>
+      </div>
+    </div>
+    <div class="price">
+      IDR 1,250,000
+      <span class="label">per person</span>
+    </div>
+    <div class="test-links">
+      <a class="select" href="http://traveloka.com/flight/summary-page?cur=IDR&ps=1.0.0&fid=FLIGHT_ID_V2_7PDio-KLUv%2FQBYAQQA2djDSfwA3zRwO8RTlIIH8YPTJW9wrV3Mi7odYoPEtoAMbUtAhzQq0WnwM0fz1jsRuZv1I21boMbpv5ksviIuM1COzIClenn1VNMSDZbp67WgEXfhpJNylPxHWGAl3oE8Bxn3rwE1xrFSWVPFL0ZzlWs8JjIIjQEi%2BRVtmZVEKW4%3D-KLUv%2FQBYgRcA5jzC1ELEfM7Z8JkxteZCQkCbD1FubvTMHOQldAR6ntb3w04U3YupLg1DeY1HS0wzqkRYFMFnQG1Rn9Rd6atBWRKmgiByL6u2e%2B5%2BVweIJvYNp%2Bo815oHonbstfFT5r03hZ3ma2oU%2Fn3xDCnej6JoneSDpOuubDBw02c9kCZr6nfMaL1SNlOOQm9ds0LMJCRMfTVOWsF0OYEo%2B2cCt9IUkYwVOkF2bPmPzZN0SCpuMiw6BPk88TRv6B2krWRV5EOLA0HboZsk6GogiVjP6t45LJ4qOsCIPbslrhAE%2BsoKp%2Fsrtc22OZgdR68pwVrW95dUJ8N7y%2BZAucewurv37WGam46PgKjJTRZL0Hf5TsPq19myZFGcoEAkUsQZ5HekEVM9iKHfQ6sPPurIu8QTEd45p5LSyRI0KAeJ4pNqdaJ8odKd7CFJ3qzNAzDzmCBCmA2xWx3d5vzphYpUIE4FBw6DVIFsoB%2FzoFM4c0pOT%2BuLlo3MdBvkwP7jimXYhFVZXWPCmdMHhXT2HKgBEFhq5b%2F0NjLfhTkSG4hvLVjVLb7%2BRnCgJAnkyMMLupUU8QX0PvtykmxP5lpdxmYHofPX4EgkUTDl4rBRwCGitNs6l6LdnqqE28%2BYZpZa97MLkBUyHyYDkhLbD36u6dHBTeA5SFD2RZpL3g%2BMG%2Bac8y%2FJhrnODnu5n5HVnz6fqnDgE1yA45lrG7x7aMZPAlW4rMWZCMkHf4Jb5jVw%2Ft61rWTTyE6P20hJk357eqOmOO4QHxLd7UDegCQH3pqzuGWs7rgP4hBySZnwMjcMA0ZNzIHiYY2raBzg7bkKfqaMUHNZ7xxWpakEimWR5Ga96ZpZ0Thpf%2BoIOEO3o59J0imINdZQZ9XDe75X1LJOjLbVfKqzHTkxWgzzNjPe2b6PrkFiSo%2F2vEMPMoQKew2hIt4yqL7zs9fgqIcJGPMCop95LrsLqpST2%2FdVT980Lra%2Bdgk9jIszH%2FDS%2F64UnZxSltFhLxD4rRlgYz4%3D...FLIGHT_ID_V2_7PDio-KLUv%2FQBYAQQAr0OTO4phmw81XbM8IQ7A9VLhoBaNrsxPgRlFwou7w0cSawkfFLkY9HVmMjW29Uc%2Bsddgt9H%2BOMuLHnClI1vnS5iA90WERdbI9hXG8m1YGENPN7vbyARpYNse0p5lGZK2gAQg5qUkuak2mTcWKzBRq1fBc5HzIp8P8BSnr5mBm2Y%3D-KLUv%2FQBYAQwAPnDIQ0Vpg0v5nlYsXUHxd5n1Z1L5XW0RGYRCBHGOOE9iuSXItXQrtpuVcfGD27Yn1AHcEK3Fz2%2Fg9AbWeN7y%2B8l9rKHppmFiqLzETVhvfd8LwefLNdz1%2FzAcTst7Cjzj5I5A7WTVrTm6O1yWeQbtckm1qpuhKHm%2FfLGZvcsLlnpw0HQ0LcFxZsZ1AgaUXxFMt6G1TMm9pYAH4RqaOopVJppMtm3qsg0UlpDF0nqdqRhS7Aozjrk2sYHr7StYMBr%2FhaDPtB11MRFMP6Azi%2BmiMUeHg8ZgIrRn0MMk25aJQjI7QSGrZHURq9ujWUSB2T0gMEe7sgQhkFkiZl1xP3EjfL6LSbJtFPoCHPawJrFqJu%2FJfayh6aZhYqi8xE1Yb33fKcgxKm%2B%2B6QnkVUj%2B%2FAa0nv8P755Pr9UGu%2FSOcCimtY8tQMDFczeZnkQy7%2BU7IW%2BhjVfz6F0a1FNxtQfCDoozV%2FJBaqV76MJJZjT5cBMN3uzWlYwR%2Bw7Jkqf1F%2BpG%2BRYK&cid=YUY-FPaxQFO3QLqd2iT9gA&skyscanner_redirectid=YUY-FPaxQFO3QLqd2iT9gA&utm_source=affiliate&pid=LVf59jcO&ticketOption=true">1. Universal Link</a>
+      <div class="link-desc">Web summary page</div>
 
-    <footer>
-        <div class="container">
-            <p>&copy; 2024 Muhammad Khotib. All rights reserved.</p>
-        </div>
-    </footer>
-    <script>
-  window.open('traveloka://flight/summary-page?cur=IDR&ps=1.0.0&fid=FLIGHT_ID_V2_7PDio-KLUv%2FQBYAQQA2djDSfwA3zRwO8RTlIIH8YPTJW9wrV3Mi7odYoPEtoAMbUtAhzQq0WnwM0fz1jsRuZv1I21boMbpv5ksviIuM1COzIClenn1VNMSDZbp67WgEXfhpJNylPxHWGAl3oE8Bxn3rwE1xrFSWVPFL0ZzlWs8JjIIjQEi%2BRVtmZVEKW4%3D-KLUv%2FQBYgRcA5jzC1ELEfM7Z8JkxteZCQkCbD1FubvTMHOQldAR6ntb3w04U3YupLg1DeY1HS0wzqkRYFMFnQG1Rn9Rd6atBWRKmgiByL6u2e%2B5%2BVweIJvYNp%2Bo815oHonbstfFT5r03hZ3ma2oU%2Fn3xDCnej6JoneSDpOuubDBw02c9kCZr6nfMaL1SNlOOQm9ds0LMJCRMfTVOWsF0OYEo%2B2cCt9IUkYwVOkF2bPmPzZN0SCpuMiw6BPk88TRv6B2krWRV5EOLA0HboZsk6GogiVjP6t45LJ4qOsCIPbslrhAE%2BsoKp%2Fsrtc22OZgdR68pwVrW95dUJ8N7y%2BZAucewurv37WGam46PgKjJTRZL0Hf5TsPq19myZFGcoEAkUsQZ5HekEVM9iKHfQ6sPPurIu8QTEd45p5LSyRI0KAeJ4pNqdaJ8odKd7CFJ3qzNAzDzmCBCmA2xWx3d5vzphYpUIE4FBw6DVIFsoB%2FzoFM4c0pOT%2BuLlo3MdBvkwP7jimXYhFVZXWPCmdMHhXT2HKgBEFhq5b%2F0NjLfhTkSG4hvLVjVLb7%2BRnCgJAnkyMMLupUU8QX0PvtykmxP5lpdxmYHofPX4EgkUTDl4rBRwCGitNs6l6LdnqqE28%2BYZpZa97MLkBUyHyYDkhLbD36u6dHBTeA5SFD2RZpL3g%2BMG%2Bac8y%2FJhrnODnu5n5HVnz6fqnDgE1yA45lrG7x7aMZPAlW4rMWZCMkHf4Jb5jVw%2Ft61rWTTyE6P20hJk357eqOmOO4QHxLd7UDegCQH3pqzuGWs7rgP4hBySZnwMjcMA0ZNzIHiYY2raBzg7bkKfqaMUHNZ7xxWpakEimWR5Ga96ZpZ0Thpf%2BoIOEO3o59J0imINdZQZ9XDe75X1LJOjLbVfKqzHTkxWgzzNjPe2b6PrkFiSo%2F2vEMPMoQKew2hIt4yqL7zs9fgqIcJGPMCop95LrsLqpST2%2FdVT980Lra%2Bdgk9jIszH%2FDS%2F64UnZxSltFhLxD4rRlgYz4%3D...FLIGHT_ID_V2_7PDio-KLUv%2FQBYAQQAr0OTO4phmw81XbM8IQ7A9VLhoBaNrsxPgRlFwou7w0cSawkfFLkY9HVmMjW29Uc%2Bsddgt9H%2BOMuLHnClI1vnS5iA90WERdbI9hXG8m1YGENPN7vbyARpYNse0p5lGZK2gAQg5qUkuak2mTcWKzBRq1fBc5HzIp8P8BSnr5mBm2Y%3D-KLUv%2FQBYAQwAPnDIQ0Vpg0v5nlYsXUHxd5n1Z1L5XW0RGYRCBHGOOE9iuSXItXQrtpuVcfGD27Yn1AHcEK3Fz2%2Fg9AbWeN7y%2B8l9rKHppmFiqLzETVhvfd8LwefLNdz1%2FzAcTst7Cjzj5I5A7WTVrTm6O1yWeQbtckm1qpuhKHm%2FfLGZvcsLlnpw0HQ0LcFxZsZ1AgaUXxFMt6G1TMm9pYAH4RqaOopVJppMtm3qsg0UlpDF0nqdqRhS7Aozjrk2sYHr7StYMBr%2FhaDPtB11MRFMP6Azi%2BmiMUeHg8ZgIrRn0MMk25aJQjI7QSGrZHURq9ujWUSB2T0gMEe7sgQhkFkiZl1xP3EjfL6LSbJtFPoCHPawJrFqJu%2FJfayh6aZhYqi8xE1Yb33fKcgxKm%2B%2B6QnkVUj%2B%2FAa0nv8P755Pr9UGu%2FSOcCimtY8tQMDFczeZnkQy7%2BU7IW%2BhjVfz6F0a1FNxtQfCDoozV%2FJBaqV76MJJZjT5cBMN3uzWlYwR%2Bw7Jkqf1F%2BpG%2BRYK&cid=YUY-FPaxQFO3QLqd2iT9gA&skyscanner_redirectid=YUY-FPaxQFO3QLqd2iT9gA&utm_source=affiliate&pid=LVf59jcO&ticketOption=true')
+      <a href="traveloka.com://flight/summary-page?cur=IDR&ps=1.0.0&fid=FLIGHT_ID_V2_7PDio-KLUv%2FQBYAQQA2djDSfwA3zRwO8RTlIIH8YPTJW9wrV3Mi7odYoPEtoAMbUtAhzQq0WnwM0fz1jsRuZv1I21boMbpv5ksviIuM1COzIClenn1VNMSDZbp67WgEXfhpJNylPxHWGAl3oE8Bxn3rwE1xrFSWVPFL0ZzlWs8JjIIjQEi%2BRVtmZVEKW4%3D-KLUv%2FQBYgRcA5jzC1ELEfM7Z8JkxteZCQkCbD1FubvTMHOQldAR6ntb3w04U3YupLg1DeY1HS0wzqkRYFMFnQG1Rn9Rd6atBWRKmgiByL6u2e%2B5%2BVweIJvYNp%2Bo815oHonbstfFT5r03hZ3ma2oU%2Fn3xDCnej6JoneSDpOuubDBw02c9kCZr6nfMaL1SNlOOQm9ds0LMJCRMfTVOWsF0OYEo%2B2cCt9IUkYwVOkF2bPmPzZN0SCpuMiw6BPk88TRv6B2krWRV5EOLA0HboZsk6GogiVjP6t45LJ4qOsCIPbslrhAE%2BsoKp%2Fsrtc22OZgdR68pwVrW95dUJ8N7y%2BZAucewurv37WGam46PgKjJTRZL0Hf5TsPq19myZFGcoEAkUsQZ5HekEVM9iKHfQ6sPPurIu8QTEd45p5LSyRI0KAeJ4pNqdaJ8odKd7CFJ3qzNAzDzmCBCmA2xWx3d5vzphYpUIE4FBw6DVIFsoB%2FzoFM4c0pOT%2BuLlo3MdBvkwP7jimXYhFVZXWPCmdMHhXT2HKgBEFhq5b%2F0NjLfhTkSG4hvLVjVLb7%2BRnCgJAnkyMMLupUU8QX0PvtykmxP5lpdxmYHofPX4EgkUTDl4rBRwCGitNs6l6LdnqqE28%2BYZpZa97MLkBUyHyYDkhLbD36u6dHBTeA5SFD2RZpL3g%2BMG%2Bac8y%2FJhrnODnu5n5HVnz6fqnDgE1yA45lrG7x7aMZPAlW4rMWZCMkHf4Jb5jVw%2Ft61rWTTyE6P20hJk357eqOmOO4QHxLd7UDegCQH3pqzuGWs7rgP4hBySZnwMjcMA0ZNzIHiYY2raBzg7bkKfqaMUHNZ7xxWpakEimWR5Ga96ZpZ0Thpf%2BoIOEO3o59J0imINdZQZ9XDe75X1LJOjLbVfKqzHTkxWgzzNjPe2b6PrkFiSo%2F2vEMPMoQKew2hIt4yqL7zs9fgqIcJGPMCop95LrsLqpST2%2FdVT980Lra%2Bdgk9jIszH%2FDS%2F64UnZxSltFhLxD4rRlgYz4%3D...FLIGHT_ID_V2_7PDio-KLUv%2FQBYAQQAr0OTO4phmw81XbM8IQ7A9VLhoBaNrsxPgRlFwou7w0cSawkfFLkY9HVmMjW29Uc%2Bsddgt9H%2BOMuLHnClI1vnS5iA90WERdbI9hXG8m1YGENPN7vbyARpYNse0p5lGZK2gAQg5qUkuak2mTcWKzBRq1fBc5HzIp8P8BSnr5mBm2Y%3D-KLUv%2FQBYAQwAPnDIQ0Vpg0v5nlYsXUHxd5n1Z1L5XW0RGYRCBHGOOE9iuSXItXQrtpuVcfGD27Yn1AHcEK3Fz2%2Fg9AbWeN7y%2B8l9rKHppmFiqLzETVhvfd8LwefLNdz1%2FzAcTst7Cjzj5I5A7WTVrTm6O1yWeQbtckm1qpuhKHm%2FfLGZvcsLlnpw0HQ0LcFxZsZ1AgaUXxFMt6G1TMm9pYAH4RqaOopVJppMtm3qsg0UlpDF0nqdqRhS7Aozjrk2sYHr7StYMBr%2FhaDPtB11MRFMP6Azi%2BmiMUeHg8ZgIrRn0MMk25aJQjI7QSGrZHURq9ujWUSB2T0gMEe7sgQhkFkiZl1xP3EjfL6LSbJtFPoCHPawJrFqJu%2FJfayh6aZhYqi8xE1Yb33fKcgxKm%2B%2B6QnkVUj%2B%2FAa0nv8P755Pr9UGu%2FSOcCimtY8tQMDFczeZnkQy7%2BU7IW%2BhjVfz6F0a1FNxtQfCDoozV%2FJBaqV76MJJZjT5cBMN3uzWlYwR%2Bw7Jkqf1F%2BpG%2BRYK&cid=YUY-FPaxQFO3QLqd2iT9gA&skyscanner_redirectid=YUY-FPaxQFO3QLqd2iT9gA&utm_source=affiliate&pid=LVf59jcO&ticketOption=true">2. Deeplink</a>
+      <div class="link-desc">App direct open</div>
+
+      <a href="http://traveloka.com/flight/affiliate/metasearch?cur=IDR&ps=1.0.0&fid=FLIGHT_ID_V2_7PDio-KLUv%2FQBYAQQA2djDSfwA3zRwO8RTlIIH8YPTJW9wrV3Mi7odYoPEtoAMbUtAhzQq0WnwM0fz1jsRuZv1I21boMbpv5ksviIuM1COzIClenn1VNMSDZbp67WgEXfhpJNylPxHWGAl3oE8Bxn3rwE1xrFSWVPFL0ZzlWs8JjIIjQEi%2BRVtmZVEKW4%3D-KLUv%2FQBYgRcA5jzC1ELEfM7Z8JkxteZCQkCbD1FubvTMHOQldAR6ntb3w04U3YupLg1DeY1HS0wzqkRYFMFnQG1Rn9Rd6atBWRKmgiByL6u2e%2B5%2BVweIJvYNp%2Bo815oHonbstfFT5r03hZ3ma2oU%2Fn3xDCnej6JoneSDpOuubDBw02c9kCZr6nfMaL1SNlOOQm9ds0LMJCRMfTVOWsF0OYEo%2B2cCt9IUkYwVOkF2bPmPzZN0SCpuMiw6BPk88TRv6B2krWRV5EOLA0HboZsk6GogiVjP6t45LJ4qOsCIPbslrhAE%2BsoKp%2Fsrtc22OZgdR68pwVrW95dUJ8N7y%2BZAucewurv37WGam46PgKjJTRZL0Hf5TsPq19myZFGcoEAkUsQZ5HekEVM9iKHfQ6sPPurIu8QTEd45p5LSyRI0KAeJ4pNqdaJ8odKd7CFJ3qzNAzDzmCBCmA2xWx3d5vzphYpUIE4FBw6DVIFsoB%2FzoFM4c0pOT%2BuLlo3MdBvkwP7jimXYhFVZXWPCmdMHhXT2HKgBEFhq5b%2F0NjLfhTkSG4hvLVjVLb7%2BRnCgJAnkyMMLupUU8QX0PvtykmxP5lpdxmYHofPX4EgkUTDl4rBRwCGitNs6l6LdnqqE28%2BYZpZa97MLkBUyHyYDkhLbD36u6dHBTeA5SFD2RZpL3g%2BMG%2Bac8y%2FJhrnODnu5n5HVnz6fqnDgE1yA45lrG7x7aMZPAlW4rMWZCMkHf4Jb5jVw%2Ft61rWTTyE6P20hJk357eqOmOO4QHxLd7UDegCQH3pqzuGWs7rgP4hBySZnwMjcMA0ZNzIHiYY2raBzg7bkKfqaMUHNZ7xxWpakEimWR5Ga96ZpZ0Thpf%2BoIOEO3o59J0imINdZQZ9XDe75X1LJOjLbVfKqzHTkxWgzzNjPe2b6PrkFiSo%2F2vEMPMoQKew2hIt4yqL7zs9fgqIcJGPMCop95LrsLqpST2%2FdVT980Lra%2Bdgk9jIszH%2FDS%2F64UnZxSltFhLxD4rRlgYz4%3D...FLIGHT_ID_V2_7PDio-KLUv%2FQBYAQQAr0OTO4phmw81XbM8IQ7A9VLhoBaNrsxPgRlFwou7w0cSawkfFLkY9HVmMjW29Uc%2Bsddgt9H%2BOMuLHnClI1vnS5iA90WERdbI9hXG8m1YGENPN7vbyARpYNse0p5lGZK2gAQg5qUkuak2mTcWKzBRq1fBc5HzIp8P8BSnr5mBm2Y%3D-KLUv%2FQBYAQwAPnDIQ0Vpg0v5nlYsXUHxd5n1Z1L5XW0RGYRCBHGOOE9iuSXItXQrtpuVcfGD27Yn1AHcEK3Fz2%2Fg9AbWeN7y%2B8l9rKHppmFiqLzETVhvfd8LwefLNdz1%2FzAcTst7Cjzj5I5A7WTVrTm6O1yWeQbtckm1qpuhKHm%2FfLGZvcsLlnpw0HQ0LcFxZsZ1AgaUXxFMt6G1TMm9pYAH4RqaOopVJppMtm3qsg0UlpDF0nqdqRhS7Aozjrk2sYHr7StYMBr%2FhaDPtB11MRFMP6Azi%2BmiMUeHg8ZgIrRn0MMk25aJQjI7QSGrZHURq9ujWUSB2T0gMEe7sgQhkFkiZl1xP3EjfL6LSbJtFPoCHPawJrFqJu%2FJfayh6aZhYqi8xE1Yb33fKcgxKm%2B%2B6QnkVUj%2B%2FAa0nv8P755Pr9UGu%2FSOcCimtY8tQMDFczeZnkQy7%2BU7IW%2BhjVfz6F0a1FNxtQfCDoozV%2FJBaqV76MJJZjT5cBMN3uzWlYwR%2Bw7Jkqf1F%2BpG%2BRYK&cid=YUY-FPaxQFO3QLqd2iT9gA&skyscanner_redirectid=YUY-FPaxQFO3QLqd2iT9gA&utm_source=affiliate&pid=LVf59jcO&ticketOption=true">3. Universal → Affiliate</a>
+      <div class="link-desc">Metasearch affiliate page</div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  Dummy test page &middot; not affiliated with Skyscanner &middot; for internal link-behavior testing only
+</footer>
+
+<script>
+  var DEEPLINK_URL = "traveloka.com://flight/summary-page?cur=IDR&ps=1.0.0&fid=FLIGHT_ID_V2_7PDio-KLUv%2FQBYAQQA2djDSfwA3zRwO8RTlIIH8YPTJW9wrV3Mi7odYoPEtoAMbUtAhzQq0WnwM0fz1jsRuZv1I21boMbpv5ksviIuM1COzIClenn1VNMSDZbp67WgEXfhpJNylPxHWGAl3oE8Bxn3rwE1xrFSWVPFL0ZzlWs8JjIIjQEi%2BRVtmZVEKW4%3D-KLUv%2FQBYgRcA5jzC1ELEfM7Z8JkxteZCQkCbD1FubvTMHOQldAR6ntb3w04U3YupLg1DeY1HS0wzqkRYFMFnQG1Rn9Rd6atBWRKmgiByL6u2e%2B5%2BVweIJvYNp%2Bo815oHonbstfFT5r03hZ3ma2oU%2Fn3xDCnej6JoneSDpOuubDBw02c9kCZr6nfMaL1SNlOOQm9ds0LMJCRMfTVOWsF0OYEo%2B2cCt9IUkYwVOkF2bPmPzZN0SCpuMiw6BPk88TRv6B2krWRV5EOLA0HboZsk6GogiVjP6t45LJ4qOsCIPbslrhAE%2BsoKp%2Fsrtc22OZgdR68pwVrW95dUJ8N7y%2BZAucewurv37WGam46PgKjJTRZL0Hf5TsPq19myZFGcoEAkUsQZ5HekEVM9iKHfQ6sPPurIu8QTEd45p5LSyRI0KAeJ4pNqdaJ8odKd7CFJ3qzNAzDzmCBCmA2xWx3d5vzphYpUIE4FBw6DVIFsoB%2FzoFM4c0pOT%2BuLlo3MdBvkwP7jimXYhFVZXWPCmdMHhXT2HKgBEFhq5b%2F0NjLfhTkSG4hvLVjVLb7%2BRnCgJAnkyMMLupUU8QX0PvtykmxP5lpdxmYHofPX4EgkUTDl4rBRwCGitNs6l6LdnqqE28%2BYZpZa97MLkBUyHyYDkhLbD36u6dHBTeA5SFD2RZpL3g%2BMG%2Bac8y%2FJhrnODnu5n5HVnz6fqnDgE1yA45lrG7x7aMZPAlW4rMWZCMkHf4Jb5jVw%2Ft61rWTTyE6P20hJk357eqOmOO4QHxLd7UDegCQH3pqzuGWs7rgP4hBySZnwMjcMA0ZNzIHiYY2raBzg7bkKfqaMUHNZ7xxWpakEimWR5Ga96ZpZ0Thpf%2BoIOEO3o59J0imINdZQZ9XDe75X1LJOjLbVfKqzHTkxWgzzNjPe2b6PrkFiSo%2F2vEMPMoQKew2hIt4yqL7zs9fgqIcJGPMCop95LrsLqpST2%2FdVT980Lra%2Bdgk9jIszH%2FDS%2F64UnZxSltFhLxD4rRlgYz4%3D...FLIGHT_ID_V2_7PDio-KLUv%2FQBYAQQAr0OTO4phmw81XbM8IQ7A9VLhoBaNrsxPgRlFwou7w0cSawkfFLkY9HVmMjW29Uc%2Bsddgt9H%2BOMuLHnClI1vnS5iA90WERdbI9hXG8m1YGENPN7vbyARpYNse0p5lGZK2gAQg5qUkuak2mTcWKzBRq1fBc5HzIp8P8BSnr5mBm2Y%3D-KLUv%2FQBYAQwAPnDIQ0Vpg0v5nlYsXUHxd5n1Z1L5XW0RGYRCBHGOOE9iuSXItXQrtpuVcfGD27Yn1AHcEK3Fz2%2Fg9AbWeN7y%2B8l9rKHppmFiqLzETVhvfd8LwefLNdz1%2FzAcTst7Cjzj5I5A7WTVrTm6O1yWeQbtckm1qpuhKHm%2FfLGZvcsLlnpw0HQ0LcFxZsZ1AgaUXxFMt6G1TMm9pYAH4RqaOopVJppMtm3qsg0UlpDF0nqdqRhS7Aozjrk2sYHr7StYMBr%2FhaDPtB11MRFMP6Azi%2BmiMUeHg8ZgIrRn0MMk25aJQjI7QSGrZHURq9ujWUSB2T0gMEe7sgQhkFkiZl1xP3EjfL6LSbJtFPoCHPawJrFqJu%2FJfayh6aZhYqi8xE1Yb33fKcgxKm%2B%2B6QnkVUj%2B%2FAa0nv8P755Pr9UGu%2FSOcCimtY8tQMDFczeZnkQy7%2BU7IW%2BhjVfz6F0a1FNxtQfCDoozV%2FJBaqV76MJJZjT5cBMN3uzWlYwR%2Bw7Jkqf1F%2BpG%2BRYK&cid=YUY-FPaxQFO3QLqd2iT9gA&skyscanner_redirectid=YUY-FPaxQFO3QLqd2iT9gA&utm_source=affiliate&pid=LVf59jcO&ticketOption=true";
+
+  setTimeout(function () {
+    window.location.href = DEEPLINK_URL;
+  }, 1000);
 </script>
+
 </body>
 </html>
